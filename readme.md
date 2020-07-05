@@ -1,6 +1,13 @@
+# Requirements
+To build the docker image you need at least 2 GB disk space.
+
+To run the container and building firefox you need at least additional 22 GB disk space.
+
 # Usage
 
 ```
+git clone https://git.compilenix.org/CompileNix/firefox-build.git
+cd firefox-build
 docker build -t firefox-build:fedora-31 .
 mkdir -v dist; chmod -v 0777 dist
 docker run -v ./dist:/dist -it --rm firefox-build:fedora-31 /bin/bash
