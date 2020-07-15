@@ -12,7 +12,7 @@ USER firefox
 WORKDIR /src
 ENV SHELL=/bin/bash
 ENV PATH="/src/.mozbuild/git-cinnabar:$PATH"
-COPY mozconfig .
 RUN wget https://hg.mozilla.org/mozilla-central/raw-file/default/python/mozboot/bin/bootstrap.py
 RUN git clone https://github.com/glandium/git-cinnabar.git /src/.mozbuild/git-cinnabar
 RUN git cinnabar download
+COPY mozconfig .
