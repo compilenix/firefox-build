@@ -8,11 +8,11 @@ COPY sudoers /etc/sudoers
 RUN useradd -m --home-dir /src firefox
 RUN echo "export PATH=\"/src/.mozbuild/git-cinnabar:$PATH\"" >>/src/.bashrc
 RUN echo "export SHELL=/bin/bash" >>/src/.bashrc
+RUN echo "export MOZCONFIG=/src/mozconfig" >>/src/.bashrc
 USER firefox
 WORKDIR /src
 ENV SHELL=/bin/bash
 ENV PATH="/src/.mozbuild/git-cinnabar:$PATH"
+ENV MOZCONFIG="/src/mozconfig"
 RUN wget https://hg.mozilla.org/mozilla-central/raw-file/default/python/mozboot/bin/bootstrap.py
-RUN git clone https://github.com/glandium/git-cinnabar.git /src/.mozbuild/git-cinnabar
-RUN git cinnabar download
 COPY mozconfig .
