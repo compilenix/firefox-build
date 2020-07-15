@@ -10,7 +10,7 @@ git clone https://git.compilenix.org/CompileNix/firefox-build.git
 cd firefox-build
 docker build -t firefox-build:fedora-31 .
 mkdir -v dist; chmod -v 0777 dist
-docker run -v ./dist:/dist -it --rm firefox-build:fedora-31 /bin/bash
+docker run -v ./dist:/dist:z -it --rm firefox-build:fedora-31 /bin/bash
 python bootstrap.py --vcs=git --application-choice browser --no-interactive
 cd mozilla-unified
 git checkout origin/bookmarks/release
