@@ -1,7 +1,7 @@
-FROM fedora:31
+FROM fedora:32
 
 RUN dnf update --refresh --assumeyes
-RUN dnf install --assumeyes python2 python2-pip python3 python3-pip git curl wget zip
+RUN dnf install --assumeyes python2 python3 python3-pip git curl wget zip
 RUN dnf install --assumeyes autoconf213 nodejs which npm python2-devel redhat-rpm-config alsa-lib-devel dbus-glib-devel glibc-static gtk2-devel libstdc++-static libXt-devel nasm pulseaudio-libs-devel wireless-tools-devel yasm gcc-c++ mercurial
 RUN dnf groupinstall --assumeyes "C Development Tools and Libraries" "GNOME Software Development"
 COPY sudoers /etc/sudoers
