@@ -28,6 +28,7 @@ Now you can build firefox. \
 When asked for `Destination directory for Git clone`, enter: `mozilla-unified`
 
 ```
+docker build -t firefox-build:fedora-32 .
 mkdir -v dist; chmod -v 0777 dist
 docker run -v ./dist:/dist:z -it --rm firefox-build:fedora-32 /bin/bash
 
