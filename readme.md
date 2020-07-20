@@ -13,16 +13,13 @@ cd firefox-build
 docker build -t firefox-build:fedora-32 .
 ```
 
-Update `mozconfig` to best match your CPU properties and features and also update `MOZ_MAKE_FLAGS` to the result of `echo $(($(nproc) + 2))`. \
-The following snippet will help you finding the supported CFLAGS of your CPU:
+Find your CPU cache sizes and update the `mozconfig`:
 
 ```sh
 docker run -it --rm firefox-build:fedora-32 /bin/bash
 gcc -v -E -x c /dev/null -o /dev/null -march=native 2>&1 | grep /cc1
 exit
 ```
-
-I had to disable AVX2, even my CPU does support it, using `-mno-avx2`.
 
 Now you can build firefox. \
 When asked for `Destination directory for Git clone`, enter: `mozilla-unified`
@@ -66,11 +63,28 @@ Apply before `nice -n 15 ./mach build`.
 
 ## Disable "Select all" when clicking into UrlBar
 
-File: `/src/mozilla-unified/browser/components/urlbar/UrlbarInput.jsm` \
-Line: 1970
+```sh
+vim /src/mozilla-unified/browser/components/urlbar/UrlbarInput.jsm +:1987
+```
 
 ```js
 _maybeSelectAll() {
     return;
     // ...
 ```
+
+# Troubleshooting
+If you want to enable or disable specific cpu features, here you can get info about what the compilers detect on your machine
+
+```sh
+docker run -it --rm firefox-build:fedora-32 /bin/bash
+# C and C++ flags:
+gcc -v -E -x c /dev/null -o /dev/null -march=native 2>&1 | grep /cc1
+# Rust flags
+rustc -C help
+rustc --print target-cpus
+rustc --print target-features
+exit
+```
+
+I had to disable AVX2, even my CPU does support it, using `-mno-avx2` for the `CFLAGS` and `-C target-features=-avx2` for `RUSTFLAGS`.
