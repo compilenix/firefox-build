@@ -1,4 +1,4 @@
-CFLAGS="${CFLAGS} -pipe -march=native -mno-avx2 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512 -mtune=native"
+CFLAGS="${CFLAGS} -O2 -pipe -march=native -mno-avx2 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512 -mtune=native"
 CXXFLAGS="${CXXFLAGS} -pipe -march=native -mno-avx2 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512 -mtune=native"
 RUSTFLAGS="-C target-cpu=native -C opt-level=2"
 CARGO_BUILD_JOBS=$(nproc)
