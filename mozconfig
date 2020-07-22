@@ -1,14 +1,15 @@
-CFLAGS="${CFLAGS} -O2 -pipe -march=native -mno-avx2 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512 -mtune=native"
-CXXFLAGS="${CXXFLAGS} -pipe -march=native -mno-avx2 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512 -mtune=native"
-RUSTFLAGS="-C target-cpu=native -C opt-level=2"
-CARGO_BUILD_JOBS=$(nproc)
+OPT_LEVEL=3
 JOBS=$(nproc)
+CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native -mno-avx2 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512 -mtune=native"
+CXXFLAGS="${CXXFLAGS} -pipe -march=native -mno-avx2 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512 -mtune=native"
+RUSTFLAGS="-C target-cpu=native -C opt-level=${OPT_LEVEL}"
+CARGO_BUILD_JOBS=${JOBS}
 
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-ff-rel-opt
-mk_add_options MOZ_MAKE_FLAGS="-j$(nproc)"
+mk_add_options MOZ_MAKE_FLAGS="-j${JOBS}"
 mk_add_options AUTOCLOBBER=1
 
-ac_add_options --enable-optimize=-O2
+ac_add_options --enable-optimize=-O${OPT_LEVEL}
 ac_add_options --enable-rust-simd
 ac_add_options --enable-hardening
 ac_add_options --disable-debug
@@ -18,3 +19,4 @@ ac_add_options --disable-tests
 ac_add_options --enable-crashreporter
 ac_add_options --enable-official-branding
 ac_add_options --disable-updater
+
