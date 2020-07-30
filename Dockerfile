@@ -15,4 +15,3 @@ ENV SHELL=/bin/bash
 ENV PATH="/src/.mozbuild/git-cinnabar:$PATH"
 ENV MOZCONFIG="/src/mozconfig"
 RUN wget https://hg.mozilla.org/mozilla-central/raw-file/default/python/mozboot/bin/bootstrap.py
-COPY mozconfig .
