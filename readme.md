@@ -74,6 +74,7 @@ _maybeSelectAll() {
 ```
 
 # Troubleshooting
+# Hardware specific compiler flags
 If you want to enable or disable specific cpu features, here you can get info about what the compilers detect on your machine
 
 ```sh
@@ -88,3 +89,15 @@ exit
 ```
 
 I had to disable AVX2, even my CPU does support it, using `-mno-avx2` for the `CFLAGS` and `-C target-features=-avx2` for `RUSTFLAGS`.
+
+# Compile error: error: options `-C embed-bitcode=no` and `-C lto` are incompatible
+This "issue" came up with the release of Rust 1.45.
+
+[Bugzilla issue](https://bugzilla.mozilla.org/show_bug.cgi?id=1640982)
+
+My workaround; downgrade Rust to 1.44.1:
+```sh
+# run this after "bootstrap" and before "./mach build"
+source ~/.cargo/env
+rustup default 1.44.1
+```
