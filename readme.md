@@ -73,6 +73,24 @@ _maybeSelectAll() {
     // ...
 ```
 
+# Building other branches / tags / bookmarks than "bookmarks/release"
+After you've `git clone`'d or `git fetch`'ed and `cd`'ed into `mozilla-unified`, fetch the tags from origin with:
+
+```sh
+# this may take a while
+git fetch --tags hg::tags: tag "*"
+```
+
+Now find the tag you want to build, i.e.:
+
+```sh
+# get the 10 most recent firefox release tags
+git tag | egrep 'FIREFOX(_[0-9]+)+_RELEASE' | tail -10
+
+# get the 10 most recent firefox esr release tags
+git tag | egrep 'FIREFOX(_[0-9]+)+_[0-9]esr_RELEASE' | tail -10
+```
+
 # Troubleshooting
 # Hardware specific compiler flags
 If you want to enable or disable specific cpu features, here you can get info about what the compilers detect on your machine
