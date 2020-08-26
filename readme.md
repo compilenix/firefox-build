@@ -51,6 +51,8 @@ sudo dnf update --refresh --assumeyes
 cd mozilla-unified
 git reset --hard
 git pull --all
+git fetch --tags hg::tags: tag "*"
+git cinnabar fsck
 git checkout origin/bookmarks/release # or follow: Building other branches / tags / bookmarks than "bookmarks/release"
 cat browser/config/version.txt # to see the version you will be building
 ./mach bootstrap --application-choice browser --no-interactive
