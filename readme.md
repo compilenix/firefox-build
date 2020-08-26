@@ -36,7 +36,7 @@ python3 bootstrap.py --vcs=git --application-choice browser --no-interactive
 cd mozilla-unified
 git checkout origin/bookmarks/release # or follow: Building other branches / tags / bookmarks than "bookmarks/release"
 cat browser/config/version.txt # to see the version you will be building
-nice -n 15 ./mach build; ./mach package; cp -v obj-ff-rel-opt/dist/firefox-*.tar.bz2 /dist/
+nice -n 15 ./mach build && ./mach package && cp -v obj-ff-rel-opt/dist/firefox-*.tar.bz2 /dist/
 ```
 
 # Subsequent builds
@@ -56,7 +56,7 @@ git cinnabar fsck
 git checkout origin/bookmarks/release # or follow: Building other branches / tags / bookmarks than "bookmarks/release"
 cat browser/config/version.txt # to see the version you will be building
 ./mach bootstrap --application-choice browser --no-interactive
-nice -n 15 ./mach build; ./mach package; cp -v obj-ff-rel-opt/dist/firefox-*.tar.bz2 /dist/
+nice -n 15 ./mach build && ./mach package && cp -v obj-ff-rel-opt/dist/firefox-*.tar.bz2 /dist/
 ```
 
 # Paches
