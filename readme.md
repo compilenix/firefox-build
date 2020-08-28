@@ -66,8 +66,10 @@ Apply before `nice -n 15 ./mach build`.
 ## Disable "Select all" when clicking into UrlBar
 
 ```sh
-vim /src/mozilla-unified/browser/components/urlbar/UrlbarInput.jsm +:1987
+sed -Ei '/_maybeSelectAll\(\)\ \{$/a return;' browser/components/urlbar/UrlbarInput.jsm
 ```
+
+This is what we are looking for:
 
 ```js
 _maybeSelectAll() {
