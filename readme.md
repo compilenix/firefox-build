@@ -27,7 +27,7 @@ When asked for `Destination directory for Git clone`, enter: `mozilla-unified`
 ```sh
 docker build -t firefox-build:fedora-32 .
 mkdir -v dist mozilla-unified mozbuild; chmod -v 0777 dist mozilla-unified mozbuild
-docker run -v ./dist:/dist:z -v ./mozbuild:/src/.mozbuild:z -v ./mozilla-unified:/src/mozilla-unified:z -v ./mozconfig:/src/mozconfig -it --rm firefox-build:fedora-32 /bin/bash
+docker run -v ./dist:/dist:z -v ./mozbuild:/src/.mozbuild:z -v ./mozilla-unified:/src/mozilla-unified:z -v ./mozconfig:/src/mozconfig:z -it --rm firefox-build:fedora-32 /bin/bash
 git clone https://github.com/glandium/git-cinnabar.git /src/.mozbuild/git-cinnabar
 git cinnabar download
 
@@ -46,7 +46,7 @@ When asked for `Destination directory for Git clone`, enter nothing (hit enter).
 
 ```sh
 docker build -t firefox-build:fedora-32 .
-docker run -v ./dist:/dist:z -v ./mozbuild:/src/.mozbuild:z -v ./mozilla-unified:/src/mozilla-unified:z -v ./mozconfig:/src/mozconfig -it --rm firefox-build:fedora-32 /bin/bash
+docker run -v ./dist:/dist:z -v ./mozbuild:/src/.mozbuild:z -v ./mozilla-unified:/src/mozilla-unified:z -v ./mozconfig:/src/mozconfig:z -it --rm firefox-build:fedora-32 /bin/bash
 sudo dnf update --refresh --assumeyes
 cd mozilla-unified
 git reset --hard
