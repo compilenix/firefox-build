@@ -39,6 +39,8 @@ git checkout FIREFOX_80_RELEASE
 cat browser/config/version.txt # to verify the version you will be building
 # At this point you may want to apply your custom patches
 nice -n 15 ./mach build && ./mach package && cp -v obj-ff-rel-opt/dist/firefox-*.tar.bz2 /dist/
+exit
+./install.sh # you may run this with sudo if your current user is not permitted to write into the installation directory (default is ~/bin/)
 ```
 
 # Subsequent builds
@@ -61,6 +63,8 @@ cat browser/config/version.txt # to verify the version you will be building
 ./mach bootstrap --application-choice browser --no-interactive
 # At this point you may want to apply your custom patches
 nice -n 15 ./mach build && ./mach package && cp -v obj-ff-rel-opt/dist/firefox-*.tar.bz2 /dist/
+exit
+./install.sh # you may run this with sudo if your current user is not permitted to write into the installation directory (default is ~/bin/)
 ```
 
 # Paches
