@@ -20,6 +20,9 @@ set -x
 mkdir -pv ~/bin
 cp -v "dist/${version}.tar.bz2" ~/bin/
 cd ~/bin
+if [ -d "${version}" ]; then
+    rm -rf "${version}"
+fi
 mkdir -pv "${version}"
 tar -xaf "${version}.tar.bz2" --directory "${target_dir}/${version}"
 ln -sfv "${target_dir}/${version}/firefox/firefox" ./
