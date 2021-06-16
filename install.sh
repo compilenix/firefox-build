@@ -15,8 +15,8 @@ function ask_yn {
 }
 
 function reset-ask_yn {
-    function ask_yn_y_callback() { echo -n }
-    function ask_yn_n_callback() { echo -n }
+    function ask_yn_y_callback() { echo -n; }
+    function ask_yn_n_callback() { echo -n; }
 }
 reset-ask_yn
 
@@ -32,9 +32,9 @@ echo
 echo -n "version [firefox.tar.bz2]: "; read version
 version=$(echo $version | rev | cut -d . -f 3- | rev)
 
-echo -n "installation target directory [~/bin]: "; read target_dir
-if [ ! -d "$target_dir" ]; then
-    target_dir="$HOME/bin"
+echo -n "installation target directory [~/bin]: "; read install_dir
+if [ ! -d "$install_dir" ]; then
+    install_dir="$HOME/bin"
 fi
 
 # backup current firefox profiles
@@ -62,6 +62,19 @@ if [ -d "${version}" ]; then
     rm -rf "${version}"
 fi
 mkdir -pv "${version}"
-tar -xaf "${version}.tar.bz2" --directory "${target_dir}/${version}"
-ln -sfv "${target_dir}/${version}/firefox/firefox" ./
-ls -lah --color=auto "${target_dir}/firefox"
+tar -xaf "${version}.tar.bz2" --directory "${install_dir}/${version}"
+ln -sfv "${install_dir}/${version}/firefox/firefox" ./
+ls -lah --color=auto "${install_dir}/firefox"
+
+# install firefox desktop file into ~/.local/share/applications
+function ask_yn_y_callback() {
+    mkdir -pv "$HOME/bin"
+    cp -v "./firefox.desktop" "/tmp/firefox.desktop.tmpl"
+    envsubst < "/tmp/firefox.desktop.tmpl" > "/tmp/firefox.desktop"
+    desktop-file-install --dir="$HOME/.local/share/applications" --rebuild-mime-info-cache "/tmp/firefox.desktop"
+    rm -v "/tmp/firefox.desktop.tmpl" "/tmp/firefox.desktop"
+}
+echo "install firefox desktop file into ~/.local/share/applications?"
+ask_yn
+reset-ask_yn
+
