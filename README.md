@@ -146,6 +146,6 @@ My workaround;
 
 ```sh
 ./mach clobber
-./mach bootstrap --application-choice browser --no-interactive
+./mach --no-interactive bootstrap --application-choice browser
 # run mach make again
 ```

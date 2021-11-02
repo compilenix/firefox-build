@@ -74,7 +74,9 @@ function ask_yn_y_callback() {
     desktop-file-install --dir="$HOME/.local/share/applications" --rebuild-mime-info-cache "/tmp/firefox.desktop"
     rm -v "/tmp/firefox.desktop.tmpl" "/tmp/firefox.desktop"
 }
+set +x
 echo "install firefox desktop file into ~/.local/share/applications?"
 ask_yn
+set -x
 reset-ask_yn
 
