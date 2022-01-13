@@ -1,5 +1,6 @@
 OPT_LEVEL=3
-JOBS=$(nproc)
+#JOBS=$(nproc)
+JOBS=6
 CPU_CACHE_PARAMS="--param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512"
 CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native ${CPU_CACHE_PARAMS} -mtune=native"
 CXXFLAGS="${CXXFLAGS} -pipe -march=native ${CPU_CACHE_PARAMS} -mtune=native"
@@ -20,4 +21,5 @@ ac_add_options --disable-tests
 ac_add_options --enable-crashreporter
 ac_add_options --enable-official-branding
 ac_add_options --disable-updater
+ac_add_options --enable-bootstrap
 

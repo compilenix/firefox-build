@@ -16,13 +16,13 @@ Clone and build docker image:
 ```sh
 git clone https://git.compilenix.org/CompileNix/firefox-build.git
 cd firefox-build
-docker build -t firefox-build:fedora-34 .
+docker build -t firefox-build:fedora-35 .
 ```
 
 Find your CPU cache sizes and update the `mozconfig`:
 
 ```sh
-docker run -it --rm firefox-build:fedora-34 /bin/bash
+docker run -it --rm firefox-build:fedora-35 /bin/bash
 gcc -v -E -x c /dev/null -o /dev/null -march=native 2>&1 | grep /cc1
 exit
 ```
@@ -31,9 +31,9 @@ Now you can build firefox. \
 When asked for `Destination directory for Git clone`, enter: `mozilla-unified`
 
 ```sh
-docker build -t firefox-build:fedora-34 .
+docker build -t firefox-build:fedora-35 .
 mkdir -v dist mozilla-unified mozbuild; chmod -v 0777 dist mozilla-unified mozbuild
-docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -it --rm firefox-build:fedora-34 /bin/bash
+docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -it --rm firefox-build:fedora-35 /bin/bash
 git config fetch.prune true
 git clone https://github.com/glandium/git-cinnabar.git /src/.mozbuild/git-cinnabar
 git cinnabar download
@@ -57,8 +57,8 @@ Update your `mozconfig`, if you want. Then execute the snippet below. \
 When asked for `Destination directory for Git clone`, enter nothing (hit enter).
 
 ```sh
-docker build -t firefox-build:fedora-34 .
-docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -it --rm firefox-build:fedora-34 /bin/bash
+docker build -t firefox-build:fedora-35 .
+docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -it --rm firefox-build:fedora-35 /bin/bash
 sudo dnf update --refresh --assumeyes
 cd mozilla-unified
 git config fetch.prune true
@@ -117,7 +117,7 @@ git tag | egrep 'FIREFOX(_[0-9]+)+_[0-9]esr_RELEASE' | tail -10
 If you want to enable or disable specific cpu features, here you can get info about what the compilers detect on your machine
 
 ```sh
-docker run -it --rm firefox-build:fedora-34 /bin/bash
+docker run -it --rm firefox-build:fedora-35 /bin/bash
 # C and C++ flags:
 gcc -v -E -x c /dev/null -o /dev/null -march=native 2>&1 | grep /cc1
 # Rust flags

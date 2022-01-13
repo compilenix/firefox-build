@@ -44,7 +44,7 @@ function ask_yn_y_callback() {
         rm -rf "$target_dir"
     fi
     mkdir -pv "$target_dir"
-    cp -rav "$HOME/.mozilla/firefox" "$target_dir"
+    rsync -rav "$HOME/.mozilla/firefox" "$target_dir"
     echo "firefox profiles backup location: \"$target_dir\""
 }
 
