@@ -1,4 +1,5 @@
 #!/bin/bash
+# vim: sw=4 et
 set -e
 
 function ask_yn {

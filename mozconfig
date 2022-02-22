@@ -1,16 +1,30 @@
-OPT_LEVEL=3
-#JOBS=$(nproc)
-JOBS=6
-CPU_CACHE_PARAMS="--param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512"
-CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native ${CPU_CACHE_PARAMS} -mtune=native"
-CXXFLAGS="${CXXFLAGS} -pipe -march=native ${CPU_CACHE_PARAMS} -mtune=native"
-RUSTFLAGS="-C target-cpu=native -C opt-level=${OPT_LEVEL}"
-CARGO_BUILD_JOBS=${JOBS}
+export OPT_LEVEL=3
+export RUSTC_OPT_LEVEL
+export JOBS=$(( $(nproc) - 2 ))
 
-mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-ff-rel-opt
+# CPU_CACHE_PARAMS="--param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512"
+CPU_CACHE_PARAMS=""
+gcc_flags=$(gcc -v -E -x c /dev/null -o /dev/null -march=native 2>&1 | grep /cc1)
+for flag in $gcc_flags; do
+    set +e
+    param=$(echo "$flag" | grep --color=none -E 'cache-size|cache-line-size')
+    set -e
+    if [[ -n "$param" ]]; then
+        export CPU_CACHE_PARAMS="$CPU_CACHE_PARAMS --param $param"
+    fi
+done
+
+export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native ${CPU_CACHE_PARAMS} -mtune=native"
+export CXXFLAGS="${CXXFLAGS} -pipe -march=native ${CPU_CACHE_PARAMS} -mtune=native"
+export RUSTFLAGS="-C target-cpu=native -C opt-level=${OPT_LEVEL}"
+export CARGO_BUILD_JOBS=${JOBS}
+
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-firefox
 mk_add_options MOZ_MAKE_FLAGS="-j${JOBS}"
 mk_add_options AUTOCLOBBER=1
+mk_add_options MOZ_PARALLEL_BUILD=$JOBS
 
+ac_add_options --enable-release
 ac_add_options --enable-optimize=-O${OPT_LEVEL}
 ac_add_options --enable-rust-simd
 ac_add_options --enable-hardening
@@ -22,4 +36,5 @@ ac_add_options --enable-crashreporter
 ac_add_options --enable-official-branding
 ac_add_options --disable-updater
 ac_add_options --enable-bootstrap
+ac_add_options --enable-new-pass-manager
 

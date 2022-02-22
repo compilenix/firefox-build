@@ -19,14 +19,6 @@ cd firefox-build
 docker build -t firefox-build:fedora-35 .
 ```
 
-Find your CPU cache sizes and update the `mozconfig`:
-
-```sh
-docker run -it --rm firefox-build:fedora-35 /bin/bash
-gcc -v -E -x c /dev/null -o /dev/null -march=native 2>&1 | grep /cc1
-exit
-```
-
 Now you can build firefox. \
 When asked for `Destination directory for Git clone`, enter: `mozilla-unified`
 
@@ -46,7 +38,7 @@ git tag | egrep 'FIREFOX(_[0-9]+)+_RELEASE' | tail -10
 git checkout FIREFOX_80_RELEASE
 cat browser/config/version.txt # to verify the version you will be building
 # At this point you may want to apply your custom patches
-nice -n 15 ./mach build && ./mach package && cp -v obj-ff-rel-opt/dist/firefox-*.tar.bz2 /dist/
+nice -n 15 ./mach build && ./mach package && cp -v obj-firefox/dist/firefox-*.tar.bz2 /dist/
 exit
 ./install.sh # you may run this with sudo if your current user is not permitted to write into the installation directory (default is ~/bin/)
 ```
@@ -71,7 +63,7 @@ git checkout FIREFOX_80_RELEASE
 cat browser/config/version.txt # to verify the version you will be building
 ./mach --no-interactive bootstrap --application-choice browser
 # At this point you may want to apply your custom patches
-nice -n 15 ./mach build && ./mach package && cp -fv obj-ff-rel-opt/dist/firefox-*.tar.bz2 /dist/
+nice -n 15 ./mach build && ./mach package && cp -fv obj-firefox/dist/firefox-*.tar.bz2 /dist/
 exit
 ./install.sh # you may run this with sudo if your current user is not permitted to write into the installation directory (default is ~/bin/)
 ```
@@ -114,6 +106,14 @@ git tag | egrep 'FIREFOX(_[0-9]+)+_[0-9]esr_RELEASE' | tail -10
 
 # Troubleshooting
 ## Hardware specific compiler flags
+Find your CPU cache sizes and update the `mozconfig`:
+
+```sh
+docker run -it --rm firefox-build:fedora-35
+gcc -v -E -x c /dev/null -o /dev/null -march=native 2>&1 | grep /cc1
+exit
+```
+
 If you want to enable or disable specific cpu features, here you can get info about what the compilers detect on your machine
 
 ```sh

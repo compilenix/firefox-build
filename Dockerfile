@@ -1,4 +1,5 @@
 FROM fedora:35
+# vim: sw=4 et
 
 RUN set -ex \
     && dnf update --refresh --assumeyes \
