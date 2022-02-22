@@ -37,4 +37,6 @@ ac_add_options --enable-official-branding
 ac_add_options --disable-updater
 ac_add_options --enable-bootstrap
 ac_add_options --enable-new-pass-manager
+ac_add_options --enable-sandbox
+ac_add_options --enable-linker=gold
 
