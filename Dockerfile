@@ -7,12 +7,21 @@ RUN set -ex \
     && dnf groupinstall --assumeyes "C Development Tools and Libraries" "GNOME Software Development" \
     && useradd -m --home-dir /src firefox \
     && echo "export PATH=\"/src/.mozbuild/git-cinnabar:$PATH\"" >>/src/.bashrc \
-    && echo "export SHELL=/bin/bash" >>/src/.bashrc \
+    && echo "export SHELL=/usr/bin/zsh" >>/src/.bashrc \
     && echo "export MOZCONFIG=/src/mozconfig" >>/src/.bashrc
 COPY sudoers /etc/sudoers
 USER firefox
 WORKDIR /src
-ENV SHELL=/bin/bash
+ENV SHELL=/usr/bin/zsh
 ENV PATH="/src/.mozbuild/git-cinnabar:$PATH"
 ENV MOZCONFIG="/src/mozconfig"
 RUN wget https://hg.mozilla.org/mozilla-central/raw-file/default/python/mozboot/bin/bootstrap.py
+
+# install CompileNix dotfiles
+RUN sudo dnf --assumeyes install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python3 redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim vim-airline wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich
+COPY ./dotfiles-config.yml /src/.config/dotfiles/compilenix/config.yml
+RUN sudo chown -R firefox:firefox /src/.config
+RUN wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
+RUN echo "SPACESHIP_BATTERY_SHOW=false" >>/src/.zshrc.env
+
+CMD [ "/usr/bin/zsh" ]

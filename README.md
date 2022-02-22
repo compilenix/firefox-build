@@ -23,9 +23,9 @@ Now you can build firefox. \
 When asked for `Destination directory for Git clone`, enter: `mozilla-unified`
 
 ```sh
-docker build -t firefox-build:fedora-35 .
+docker build --no-cache -t firefox-build:fedora-35 .
 mkdir -v dist mozilla-unified mozbuild; chmod -v 0777 dist mozilla-unified mozbuild
-docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -it --rm firefox-build:fedora-35 /bin/bash
+docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -it --rm firefox-build:fedora-35
 git config fetch.prune true
 git clone https://github.com/glandium/git-cinnabar.git /src/.mozbuild/git-cinnabar
 git cinnabar download
@@ -49,9 +49,8 @@ Update your `mozconfig`, if you want. Then execute the snippet below. \
 When asked for `Destination directory for Git clone`, enter nothing (hit enter).
 
 ```sh
-docker build -t firefox-build:fedora-35 .
-docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -it --rm firefox-build:fedora-35 /bin/bash
-sudo dnf update --refresh --assumeyes
+docker build --no-cache -t firefox-build:fedora-35 .
+docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -it --rm firefox-build:fedora-35
 cd mozilla-unified
 git config fetch.prune true
 git reset --hard
@@ -117,7 +116,7 @@ exit
 If you want to enable or disable specific cpu features, here you can get info about what the compilers detect on your machine
 
 ```sh
-docker run -it --rm firefox-build:fedora-35 /bin/bash
+docker run -it --rm firefox-build:fedora-35
 # C and C++ flags:
 gcc -v -E -x c /dev/null -o /dev/null -march=native 2>&1 | grep /cc1
 # Rust flags
