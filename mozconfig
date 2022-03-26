@@ -18,25 +18,36 @@ export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native ${CPU_CACHE_PARAMS} 
 export CXXFLAGS="${CXXFLAGS} -pipe -march=native ${CPU_CACHE_PARAMS} -mtune=native"
 export RUSTFLAGS="-C target-cpu=native -C opt-level=${OPT_LEVEL}"
 export CARGO_BUILD_JOBS=${JOBS}
+export MOZILLA_OFFICIAL=1
 
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-firefox
 mk_add_options MOZ_MAKE_FLAGS="-j${JOBS}"
 mk_add_options AUTOCLOBBER=1
 mk_add_options MOZ_PARALLEL_BUILD=$JOBS
 
+ac_add_options --enable-sandbox
+ac_add_options --enable-rust-simd
 ac_add_options --enable-release
 ac_add_options --enable-optimize=-O${OPT_LEVEL}
-ac_add_options --enable-rust-simd
-ac_add_options --enable-hardening
-ac_add_options --disable-debug
-ac_add_options --disable-debug-symbols
-ac_add_options --enable-application=browser
-ac_add_options --disable-tests
-ac_add_options --enable-crashreporter
 ac_add_options --enable-official-branding
-ac_add_options --disable-updater
-ac_add_options --enable-bootstrap
 ac_add_options --enable-new-pass-manager
-ac_add_options --enable-sandbox
+ac_add_options --enable-negotiateauth
 ac_add_options --enable-linker=gold
+ac_add_options --enable-hardening
+ac_add_options --enable-crashreporter
+ac_add_options --enable-bootstrap
+ac_add_options --enable-application=browser
+ac_add_options --disable-updater
+ac_add_options --disable-tests
+ac_add_options --disable-parental-controls
+ac_add_options --disable-debug-symbols
+ac_add_options --disable-debug
+
+# The following option unsets Telemetry Reporting. With the Addons Fiasco,
+# Mozilla was found to be collecting user's data, including saved passwords and
+# web form data, without users consent. Mozilla was also found shipping updates
+# to systems without the user's knowledge or permission.
+# As a result of this, use the following command to permanently disable
+# telemetry reporting in Firefox.
+unset MOZ_TELEMETRY_REPORTING
 
