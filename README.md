@@ -34,7 +34,7 @@ python3 bootstrap.py --no-interactive --vcs=git --application-choice browser
 
 cd mozilla-unified
 git fetch --tags hg::tags: tag "*"
-git tag | egrep 'FIREFOX(_[0-9]+)+_RELEASE' | tail -10
+git tag | egrep 'FIREFOX(_[0-9]+)+_RELEASE' | sort --version-sort | tail -10
 git checkout FIREFOX_80_RELEASE
 cat browser/config/version.txt # to verify the version you will be building
 # At this point you may want to apply your custom patches
@@ -57,7 +57,7 @@ git reset --hard
 git pull --all
 git fetch --tags hg::tags: tag "*"
 git cinnabar fsck
-git tag | egrep 'FIREFOX(_[0-9]+)+_RELEASE' | tail -10
+git tag | egrep 'FIREFOX(_[0-9]+)+_RELEASE' | sort --version-sort | tail -10
 git checkout FIREFOX_80_RELEASE
 cat browser/config/version.txt # to verify the version you will be building
 ./mach --no-interactive bootstrap --application-choice browser
