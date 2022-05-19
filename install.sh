@@ -65,6 +65,7 @@ fi
 mkdir -pv "${version}"
 tar -xaf "${version}.tar.bz2" --directory "${install_dir}/${version}"
 ln -sfv "${install_dir}/${version}/firefox/firefox" ./
+cp -v "${install_dir}/${version}/firefox/browser/chrome/icons/default/default128.png" "firefox.png"
 ls -lah --color=auto "${install_dir}/firefox"
 
 # install firefox desktop file into ~/.local/share/applications
