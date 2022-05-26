@@ -24,4 +24,9 @@ RUN sudo chown -R firefox:firefox /src/.config
 RUN wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/master/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
 RUN echo "SPACESHIP_BATTERY_SHOW=false" >>/src/.zshrc.env
 
+# install rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs >install-rust.sh \
+    && sh install-rust.sh -y \
+    && rm install-rust.sh
+
 CMD [ "/usr/bin/zsh" ]
