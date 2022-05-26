@@ -29,4 +29,6 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs >install-rust.sh \
     && sh install-rust.sh -y \
     && rm install-rust.sh
 
+COPY src/* bin/
+
 CMD [ "/usr/bin/zsh" ]

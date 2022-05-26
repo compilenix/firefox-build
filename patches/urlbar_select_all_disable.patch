@@ -1,0 +1,12 @@
+diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
+index a12eca535199f..9be361cd92ac5 100644
+--- a/browser/components/urlbar/UrlbarInput.jsm
++++ b/browser/components/urlbar/UrlbarInput.jsm
+@@ -2766,6 +2766,7 @@ class UrlbarInput {
+    *  Urlbar state, and whether the selection is empty.
+    */
+   _maybeSelectAll() {
++    return;
+     if (
+       !this._preventClickSelectsAll &&
+       this._compositionState != UrlbarUtils.COMPOSITION.COMPOSING &&
