@@ -18,7 +18,7 @@ Clone and build docker image:
 ```sh
 git clone https://git.compilenix.org/CompileNix/firefox-build.git
 cd firefox-build
-docker build -t firefox-build:fedora-35 .
+docker build -t firefox-build:fedora-36 .
 ```
 
 
@@ -28,9 +28,9 @@ Now you can prepare the build enviroment, by installing GIT cinnabar and downloa
 When asked for `Destination directory for Git clone`, enter: `mozilla-unified`
 
 ```sh
-docker build --no-cache -t firefox-build:fedora-35 .
+docker build --no-cache -t firefox-build:fedora-36 .
 mkdir -v dist mozilla-unified mozbuild; chmod -v 0777 dist mozilla-unified mozbuild
-docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -v $(pwd)/patches:/src/patches:z -it --rm firefox-build:fedora-35
+docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -v $(pwd)/patches:/src/patches:z -it --rm firefox-build:fedora-36
 git config fetch.prune true
 git clone https://github.com/glandium/git-cinnabar.git /src/.mozbuild/git-cinnabar
 git cinnabar download
@@ -44,8 +44,8 @@ Update your `mozconfig`, if you want. Then execute the snippet below. \
 When asked for `Destination directory for Git clone`, enter nothing (hit enter).
 
 ```sh
-docker build --no-cache -t firefox-build:fedora-35 .
-docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -v $(pwd)/patches:/src/patches:z -it --rm firefox-build:fedora-35
+docker build --no-cache -t firefox-build:fedora-36 .
+docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -v $(pwd)/patches:/src/patches:z -it --rm firefox-build:fedora-36
 cd mozilla-unified
 build-prepare.sh
 apply-patches.py
