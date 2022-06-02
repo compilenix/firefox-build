@@ -1,9 +1,9 @@
-FROM fedora:35
+FROM fedora:36
 # vim: sw=4 et
 
 RUN set -ex \
     && dnf update --refresh --assumeyes \
-    && dnf install --assumeyes python2 python3 python3-pip git curl wget zip vim autoconf213 nodejs which npm python2-devel python3-devel redhat-rpm-config alsa-lib-devel dbus-glib-devel glibc-static gtk2-devel libstdc++-static libXt-devel nasm pulseaudio-libs-devel wireless-tools-devel yasm gcc-c++ mercurial perl-FindBin \
+    && dnf install --assumeyes python2 python3 python3-pip git curl wget zip vim autoconf213 nodejs which npm python2-devel python3-devel redhat-rpm-config alsa-lib-devel dbus-glib-devel glibc-static gtk2-devel libstdc++-static libXt-devel nasm pulseaudio-libs-devel yasm gcc-c++ mercurial perl-FindBin \
     && dnf groupinstall --assumeyes "C Development Tools and Libraries" "GNOME Software Development" \
     && useradd -m --home-dir /src firefox \
     && echo "export PATH=\"/src/.mozbuild/git-cinnabar:$PATH\"" >>/src/.bashrc \

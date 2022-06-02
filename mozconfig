@@ -21,6 +21,7 @@ export RUSTFLAGS="-C target-cpu=native -C opt-level=${OPT_LEVEL}"
 export CARGO_BUILD_JOBS=${JOBS}
 export MOZILLA_OFFICIAL=1
 
+mk_add_options MOZ_APP_REMOTINGNAME=Firefox
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-firefox
 mk_add_options MOZ_MAKE_FLAGS="-j${JOBS}"
 mk_add_options AUTOCLOBBER=1
