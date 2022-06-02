@@ -3,6 +3,7 @@
 set -e
 set -x
 
+sudo chown -R firefox:firefox "$HOME/patches"
 git config fetch.prune true
 git reset --hard
 git fetch --all
