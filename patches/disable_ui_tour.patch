@@ -1,0 +1,13 @@
+diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
+index 0af0b8d2a0f43..f852c0e5b7cf1 100644
+--- a/browser/app/profile/firefox.js
++++ b/browser/app/profile/firefox.js
+@@ -218,7 +218,7 @@ pref("lightweightThemes.getMoreURL", "https://addons.mozilla.org/%LOCALE%/firefo
+ #endif
+ 
+ // UI tour experience.
+-pref("browser.uitour.enabled", true);
++pref("browser.uitour.enabled", false);
+ pref("browser.uitour.loglevel", "Error");
+ pref("browser.uitour.requireSecure", true);
+ pref("browser.uitour.themeOrigin", "https://addons.mozilla.org/%LOCALE%/firefox/themes/");
