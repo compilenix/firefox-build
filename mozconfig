@@ -45,11 +45,17 @@ ac_add_options --disable-parental-controls
 ac_add_options --disable-debug-symbols
 ac_add_options --disable-debug
 
+# Disable geolocation web services
+ac_add_options --disable-necko-wifi
+
+# Disable webrtc, dangerous, leaks internal IP address (and external on Win)
+ac_add_options --disable-webrtc
+
 # The following option unsets Telemetry Reporting. With the Addons Fiasco,
 # Mozilla was found to be collecting user's data, including saved passwords and
 # web form data, without users consent. Mozilla was also found shipping updates
 # to systems without the user's knowledge or permission.
 # As a result of this, use the following command to permanently disable
 # telemetry reporting in Firefox.
-unset MOZ_TELEMETRY_REPORTING
-
+export MOZ_TELEMETRY_REPORTING=
+ac_add_options MOZ_TELEMETRY_REPORTING=
