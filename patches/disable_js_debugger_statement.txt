@@ -1,0 +1,5 @@
+
+Disable the JavaScript "debugger" code statement by replacing it with "undefined".
+If you want to use "debugger" in your JS code, use "xdebugger" instead
+
+Credits: https://github.com/Xetera/undebugged-firefox

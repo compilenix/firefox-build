@@ -1,0 +1,61 @@
+diff --git a/js/src/frontend/Parser.cpp b/js/src/frontend/Parser.cpp
+index d1d0f8dd62b50..214b21f07b242 100644
+--- a/js/src/frontend/Parser.cpp
++++ b/js/src/frontend/Parser.cpp
+@@ -7585,7 +7585,8 @@ GeneralParser<ParseHandler, Unit>::catchBlockStatement(
+ 
+ template <class ParseHandler, typename Unit>
+ typename ParseHandler::DebuggerStatementType
+-GeneralParser<ParseHandler, Unit>::debuggerStatement() {
++GeneralParser<ParseHandler, Unit>::debuggerStatement(bool isRealDebuggerStatement = false) {
++  if (isRealDebuggerStatement) { return handler_.newRawUndefinedLiteral(pos()); }
+   TokenPos p;
+   p.begin = pos().begin;
+   if (!matchOrInsertSemicolon()) {
+@@ -9103,6 +9104,10 @@ typename ParseHandler::Node GeneralParser<ParseHandler, Unit>::statement(
+     case TokenKind::Debugger:
+       return debuggerStatement();
+ 
++    // "real" DebuggerStatement
++    case TokenKind::XDebugger:
++      return debuggerStatement(true);
++
+     // |function| is forbidden by lookahead restriction (unless as child
+     // statement of |if| or |else|, but Parser::consequentOrAlternative
+     // handles that).
+diff --git a/js/src/frontend/ReservedWords.h b/js/src/frontend/ReservedWords.h
+index c4022b2615c46..bae5cec1471bc 100644
+--- a/js/src/frontend/ReservedWords.h
++++ b/js/src/frontend/ReservedWords.h
+@@ -21,6 +21,7 @@
+   MACRO(const, const_, TokenKind::Const)                \
+   MACRO(continue, continue_, TokenKind::Continue)       \
+   MACRO(debugger, debugger, TokenKind::Debugger)        \
++  MACRO(xdebugger, xdebugger, TokenKind::XDebugger)     \
+   MACRO(default, default_, TokenKind::Default)          \
+   MACRO(delete, delete_, TokenKind::Delete)             \
+   MACRO(do, do_, TokenKind::Do)                         \
+diff --git a/js/src/frontend/TokenKind.h b/js/src/frontend/TokenKind.h
+index a6d0f445bc7b8..377897b97c96d 100644
+--- a/js/src/frontend/TokenKind.h
++++ b/js/src/frontend/TokenKind.h
+@@ -118,6 +118,7 @@
+   MACRO(Finally, "keyword 'finally'")                                  \
+   MACRO(Throw, "keyword 'throw'")                                      \
+   MACRO(Debugger, "keyword 'debugger'")                                \
++  MACRO(XDebugger, "keyword 'xdebugger'")                              \
+   MACRO(Export, "keyword 'export'")                                    \
+   MACRO(Import, "keyword 'import'")                                    \
+   MACRO(Class, "keyword 'class'")                                      \
+diff --git a/js/src/vm/CommonPropertyNames.h b/js/src/vm/CommonPropertyNames.h
+index 8c2d606b5695e..4743dbb4b79c2 100644
+--- a/js/src/vm/CommonPropertyNames.h
++++ b/js/src/vm/CommonPropertyNames.h
+@@ -111,6 +111,7 @@
+   MACRO_(day, day, "day")                                                      \
+   MACRO_(dayPeriod, dayPeriod, "dayPeriod")                                    \
+   MACRO_(debugger, debugger, "debugger")                                       \
++  MACRO_(xdebugger, xdebugger, "xdebugger")                                    \
+   MACRO_(decimal, decimal, "decimal")                                          \
+   MACRO_(decodeURI, decodeURI, "decodeURI")                                    \
+   MACRO_(decodeURIComponent, decodeURIComponent, "decodeURIComponent")         \
