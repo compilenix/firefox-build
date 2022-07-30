@@ -4,6 +4,7 @@
 import os
 import yaml
 import subprocess
+import re
 
 # try to load "rich"
 try:
@@ -61,7 +62,7 @@ for element in os.scandir(patch_path):
         continue
 
     # get patch name
-    patch_name = element.name.strip('.patch')
+    patch_name = re.sub(r'\.patch', '', element.name)
 
     # get patch description, if available
     if os.path.isfile(f'{patch_path}/{patch_name}.txt'):
@@ -87,3 +88,4 @@ if os.path.isfile(config_file):
 else:
     with open(config_file, 'x', 1024, 'utf8') as config_file:
         yaml.safe_dump(config, config_file)
+
