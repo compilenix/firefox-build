@@ -32,6 +32,7 @@ docker build --no-cache -t firefox-build:fedora-36 .
 mkdir -v dist mozilla-unified mozbuild; chmod -v 0777 dist mozilla-unified mozbuild
 docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -v $(pwd)/patches:/src/patches:z -it --rm --name firefox-build firefox-build:fedora-36
 git config fetch.prune true
+git config --global fetch.prune true
 git clone https://github.com/glandium/git-cinnabar.git /src/.mozbuild/git-cinnabar
 git cinnabar download
 
