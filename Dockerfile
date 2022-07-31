@@ -17,17 +17,17 @@ ENV PATH="/src/.mozbuild/git-cinnabar:$PATH"
 ENV MOZCONFIG="/src/mozconfig"
 RUN wget https://hg.mozilla.org/mozilla-central/raw-file/default/python/mozboot/bin/bootstrap.py
 
-# install CompileNix dotfiles
-RUN sudo dnf --assumeyes install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python3 redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich
+# install CompileNix dotfiles and AstroNvim
 COPY ./dotfiles-config.yml /src/.config/dotfiles/compilenix/config.yml
-RUN sudo chown -R firefox:firefox /src/.config
-RUN wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh
-RUN echo "SPACESHIP_BATTERY_SHOW=false" >>/src/.zshrc.env
-RUN echo "SPACESHIP_GIT_SHOW=false" >>/src/.zshrc.env
-RUN echo "SPACESHIP_GRADLE_SHOW=false" >>/src/.zshrc.env
-# install AstroNvim
-RUN mv ~/.config/nvim ~/.config/nvimbackup
-RUN git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+RUN set -ex \
+    && sudo dnf --assumeyes install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python3 redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich ripgrep \
+    && sudo chown -R firefox:firefox /src/.config \
+    && wget https://git.compilenix.org/CompileNix/dotfiles/-/raw/main/install.sh && chmod +x install.sh && ./install.sh && rm -f install.sh \
+    && echo "SPACESHIP_BATTERY_SHOW=false" >>/src/.zshrc.env \
+    && echo "SPACESHIP_GIT_SHOW=false" >>/src/.zshrc.env \
+    && echo "SPACESHIP_GRADLE_SHOW=false" >>/src/.zshrc.env \
+    && mv ~/.config/nvim ~/.config/nvimbackup \
+    && git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
 
 # install rust
 RUN curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs >install-rust.sh \
