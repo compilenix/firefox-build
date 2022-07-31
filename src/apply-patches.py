@@ -21,7 +21,7 @@ def ask_yn(prompt: str, default: bool):
     default_yn = '[bold]Y[/bold]/n' if default else 'y/[bold]N[/bold]'
     result = default
     while True:
-        print(f'{prompt} ', highlight=False, end='')
+        console.print(f'{prompt} ', highlight=False, end='')
         answer = console.input(f'({default_yn}): ').lower()
         if len(answer) == 0:
             break
