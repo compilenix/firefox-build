@@ -25,7 +25,7 @@ current_firefox_version=$(firefox --version)
 
 # list options
 echo "Options:"
-for file in dist/*; do
+for file in $(ls --color=never dist/* | sort --version-sort | tail -5); do
     echo "  - $(basename ${file})"
 done
 echo
