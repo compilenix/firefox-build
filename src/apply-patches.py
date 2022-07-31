@@ -18,10 +18,11 @@ except:
 
 
 def ask_yn(prompt: str, default: bool):
-    default_yn = 'Y/n' if default else 'y/N'
+    default_yn = '[bold]Y[/bold]/n' if default else 'y/[bold]N[/bold]'
     result = default
     while True:
-        answer = input(f'{prompt} [{default_yn}]: ').lower()
+        print(f'{prompt} ', highlight=False, end='')
+        answer = console.input(f'({default_yn}): ').lower()
         if len(answer) == 0:
             break
         if len(answer) != 1:
@@ -36,7 +37,7 @@ def ask_yn(prompt: str, default: bool):
 
 
 def apply_patch(patch_file: str):
-    print(f'apply patch: {os.path.basename(patch_file)}')
+    print(f'[green]apply patch: {os.path.basename(patch_file)}[/green]')
     subprocess.call(f'git apply {patch_file}.patch'.split(' '))
     pass
 
@@ -75,7 +76,8 @@ for element in os.scandir(patch_path):
     # - ask if the patch should be applied
     # - save answer in config object
     if patch_name not in config:
-        config[patch_name] = ask_yn(f'Name: {patch_name}\nDescrption: {patch_description}\nApply patch?', True)
+        config[patch_name] = ask_yn(f'[bold]Name: {patch_name}[/bold]\nDescrption: {patch_description}\nApply patch?', True)
+        print()
 
     # if answer is "yes, it should be applied", apply patch
     if config[patch_name]:
