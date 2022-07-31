@@ -1,28 +1,29 @@
 diff --git a/js/src/frontend/Parser.cpp b/js/src/frontend/Parser.cpp
-index d1d0f8dd62b50..214b21f07b242 100644
+index d1d0f8dd62b50..d962b52a11dc9 100644
 --- a/js/src/frontend/Parser.cpp
 +++ b/js/src/frontend/Parser.cpp
-@@ -7585,7 +7585,8 @@ GeneralParser<ParseHandler, Unit>::catchBlockStatement(
+@@ -9101,6 +9101,10 @@ typename ParseHandler::Node GeneralParser<ParseHandler, Unit>::statement(
  
- template <class ParseHandler, typename Unit>
- typename ParseHandler::DebuggerStatementType
--GeneralParser<ParseHandler, Unit>::debuggerStatement() {
-+GeneralParser<ParseHandler, Unit>::debuggerStatement(bool isRealDebuggerStatement = false) {
-+  if (isRealDebuggerStatement) { return handler_.newRawUndefinedLiteral(pos()); }
-   TokenPos p;
-   p.begin = pos().begin;
-   if (!matchOrInsertSemicolon()) {
-@@ -9103,6 +9104,10 @@ typename ParseHandler::Node GeneralParser<ParseHandler, Unit>::statement(
+     // DebuggerStatement
      case TokenKind::Debugger:
-       return debuggerStatement();
- 
++      return handler_.newRawUndefinedLiteral(pos());
++
 +    // "real" DebuggerStatement
 +    case TokenKind::XDebugger:
-+      return debuggerStatement(true);
-+
+       return debuggerStatement();
+ 
      // |function| is forbidden by lookahead restriction (unless as child
-     // statement of |if| or |else|, but Parser::consequentOrAlternative
-     // handles that).
+@@ -9314,6 +9318,10 @@ GeneralParser<ParseHandler, Unit>::statementListItem(
+ 
+     // DebuggerStatement
+     case TokenKind::Debugger:
++      return handler_.newRawUndefinedLiteral(pos());
++
++    // "real" DebuggerStatement
++    case TokenKind::XDebugger:
+       return debuggerStatement();
+ 
+     // Declaration[Yield]:
 diff --git a/js/src/frontend/ReservedWords.h b/js/src/frontend/ReservedWords.h
 index c4022b2615c46..bae5cec1471bc 100644
 --- a/js/src/frontend/ReservedWords.h
