@@ -28,7 +28,6 @@ Now you can prepare the build enviroment, by installing GIT cinnabar and downloa
 When asked for `Destination directory for Git clone`, enter: `mozilla-unified`
 
 ```sh
-docker build --no-cache -t firefox-build:fedora .
 mkdir -v dist mozilla-unified mozbuild; chmod -v 0777 dist mozilla-unified mozbuild
 docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -v $(pwd)/patches:/src/patches:z -it --rm --name firefox-build firefox-build:fedora
 git config --global fetch.prune true
@@ -44,7 +43,7 @@ Update your `mozconfig`, if you want. Then execute the snippet below. \
 When asked for `Destination directory for Git clone`, enter nothing (hit enter).
 
 ```sh
-docker build --no-cache -t firefox-build:fedora .
+docker build -t firefox-build:fedora .
 docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/src/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -v $(pwd)/patches:/src/patches:z -it --rm --name firefox-build firefox-build:fedora
 cd mozilla-unified
 build-prepare.sh
