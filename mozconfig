@@ -1,9 +1,13 @@
 export OPT_LEVEL=3
 export RUSTC_OPT_LEVEL
-export JOBS=$(( $(nproc) - 2 ))
+
+JOBS=$(nproc)
+# Reduce jobs by 4 if there are more then 7 cores else set jobs to half of core count
+if [ "$JOBS" -ge 8 ]; then export JOBS=$(( $JOBS - 4 )); else export JOBS=$(( $JOBS / 2 )); fi
 
 # automatic cpu cache compiler parameter detection
 # Example: CPU_CACHE_PARAMS="--param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512"
+# assumes execution with "bash" or "sh"
 CPU_CACHE_PARAMS=""
 gcc_flags=$(gcc -v -E -x c /dev/null -o /dev/null -march=native 2>&1 | grep /cc1)
 for flag in $gcc_flags; do
