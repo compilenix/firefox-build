@@ -25,17 +25,17 @@ index d1d0f8dd62b50..d962b52a11dc9 100644
  
      // Declaration[Yield]:
 diff --git a/js/src/frontend/ReservedWords.h b/js/src/frontend/ReservedWords.h
-index c4022b2615c46..bae5cec1471bc 100644
+index 723f310ecf2ec..67ad120e84831 100644
 --- a/js/src/frontend/ReservedWords.h
 +++ b/js/src/frontend/ReservedWords.h
 @@ -21,6 +21,7 @@
-   MACRO(const, const_, TokenKind::Const)                \
-   MACRO(continue, continue_, TokenKind::Continue)       \
-   MACRO(debugger, debugger, TokenKind::Debugger)        \
-+  MACRO(xdebugger, xdebugger, TokenKind::XDebugger)     \
-   MACRO(default, default_, TokenKind::Default)          \
-   MACRO(delete, delete_, TokenKind::Delete)             \
-   MACRO(do, do_, TokenKind::Do)                         \
+   MACRO(const, const_, TokenKind::Const)                        \
+   MACRO(continue, continue_, TokenKind::Continue)               \
+   MACRO(debugger, debugger, TokenKind::Debugger)                \
++  MACRO(xdebugger, xdebugger, TokenKind::XDebugger)             \
+   MACRO(default, default_, TokenKind::Default)                  \
+   MACRO(delete, delete_, TokenKind::Delete)                     \
+   MACRO(do, do_, TokenKind::Do)                                 \
 diff --git a/js/src/frontend/TokenKind.h b/js/src/frontend/TokenKind.h
 index a6d0f445bc7b8..377897b97c96d 100644
 --- a/js/src/frontend/TokenKind.h
