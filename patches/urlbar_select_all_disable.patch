@@ -1,8 +1,8 @@
-diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index ee03d959d0222..a9ec314e82414 100644
---- a/browser/components/urlbar/UrlbarInput.jsm
-+++ b/browser/components/urlbar/UrlbarInput.jsm
-@@ -2877,6 +2877,7 @@ class UrlbarInput {
+diff --git a/browser/components/urlbar/UrlbarInput.sys.mjs b/browser/components/urlbar/UrlbarInput.sys.mjs
+index c2b886df81883..177f0d73b1d4b 100644
+--- a/browser/components/urlbar/UrlbarInput.sys.mjs
++++ b/browser/components/urlbar/UrlbarInput.sys.mjs
+@@ -2883,6 +2883,7 @@ export class UrlbarInput {
     *  Urlbar state, and whether the selection is empty.
     */
    _maybeSelectAll() {
