@@ -3,6 +3,8 @@
 set -e
 set -x
 
+rustup update
+sudo dnf update --assumeyes
 sudo chown -R firefox:firefox "$HOME/patches"
 git config fetch.prune true
 git reset --hard
