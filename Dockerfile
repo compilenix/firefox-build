@@ -3,7 +3,7 @@ FROM fedora:36
 
 RUN set -ex \
     && dnf update --refresh --assumeyes \
-    && dnf install --assumeyes python2 python3 python3-pip git curl wget zip vim autoconf213 nodejs which npm python2-devel python3-devel redhat-rpm-config alsa-lib-devel dbus-glib-devel glibc-static gtk2-devel libstdc++-static libXt-devel nasm pulseaudio-libs-devel yasm gcc-c++ mercurial perl-FindBin \
+    && dnf install --assumeyes python2 python3 python3-pip git curl wget zip vim autoconf213 nodejs which npm python2-devel python3-devel redhat-rpm-config alsa-lib-devel dbus-glib-devel glibc-static gtk2-devel libstdc++-static libXt-devel nasm pulseaudio-libs-devel yasm gcc-c++ mercurial perl-FindBin watchman \
     && dnf groupinstall --assumeyes "C Development Tools and Libraries" "GNOME Software Development" \
     && useradd -m --home-dir /src firefox \
     && echo "export PATH=\"/src/.mozbuild/git-cinnabar:$PATH\"" >>/src/.bashrc \
@@ -17,7 +17,7 @@ ENV PATH="/src/.mozbuild/git-cinnabar:$PATH"
 ENV MOZCONFIG="/src/mozconfig"
 RUN wget https://hg.mozilla.org/mozilla-central/raw-file/default/python/mozboot/bin/bootstrap.py
 
-# install CompileNix dotfiles and AstroNvim
+# install CompileNix dotfiles
 COPY ./dotfiles-config.yml /src/.config/dotfiles/compilenix/config.yml
 RUN set -ex \
     && sudo dnf --assumeyes install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python3 redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich ripgrep \
@@ -26,6 +26,7 @@ RUN set -ex \
     && echo "SPACESHIP_BATTERY_SHOW=false" >>/src/.zshrc.env \
     && echo "SPACESHIP_GIT_SHOW=false" >>/src/.zshrc.env \
     && echo "SPACESHIP_GRADLE_SHOW=false" >>/src/.zshrc.env \
+    && echo "ENABLE_ZSH_ASYNC_UPDATE_CHECK=false" >>/src/.zshrc.env \
     && mv ~/.config/nvim ~/.config/nvimbackup \
     && git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
 

@@ -3,7 +3,10 @@ export RUSTC_OPT_LEVEL
 
 JOBS=$(nproc)
 # Reduce jobs by 4 if there are more then 7 cores else set jobs to half of core count
-if [ "$JOBS" -ge 8 ]; then export JOBS=$(( $JOBS - 4 )); else export JOBS=$(( $JOBS / 2 )); fi
+if [ "$JOBS" -ge 8 ]; then JOBS=$(( $JOBS - 4 )); else JOBS=$(( $JOBS / 2 )); fi
+JOBS=$(( $JOBS / 2 ))
+if [ "$JOBS" -le 1 ]; then JOBS=1; fi
+export JOBS="$JOBS"
 
 # automatic cpu cache compiler parameter detection
 # Example: CPU_CACHE_PARAMS="--param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512"
@@ -22,7 +25,10 @@ done
 export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native ${CPU_CACHE_PARAMS} -mtune=native"
 export CXXFLAGS="${CXXFLAGS} -pipe -march=native ${CPU_CACHE_PARAMS} -mtune=native"
 export RUSTFLAGS="-C target-cpu=native -C opt-level=${OPT_LEVEL}"
-export CARGO_BUILD_JOBS=${JOBS}
+export CARGO_BUILD_JOBS=$JOBS
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
+export CARGO_PROFILE_RELEASE_LTO=true
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=$OPT_LEVEL
 export MOZILLA_OFFICIAL=1
 
 mk_add_options MOZ_APP_REMOTINGNAME=Firefox
@@ -30,6 +36,10 @@ mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-firefox
 mk_add_options MOZ_MAKE_FLAGS="-j${JOBS}"
 mk_add_options AUTOCLOBBER=1
 mk_add_options MOZ_PARALLEL_BUILD=$JOBS
+mk_add_options CARGO_BUILD_JOBS=$JOBS
+mk_add_options CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
+mk_add_options CARGO_PROFILE_RELEASE_LTO=true
+mk_add_options CARGO_PROFILE_RELEASE_OPT_LEVEL=3
 
 ac_add_options --enable-sandbox
 ac_add_options --enable-rust-simd
