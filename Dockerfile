@@ -1,4 +1,4 @@
-FROM fedora:36
+FROM fedora:37
 # vim: sw=4 et
 
 RUN set -ex \
