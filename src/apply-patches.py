@@ -37,7 +37,7 @@ def ask_yn(prompt: str, default: bool):
 
 
 def apply_patch(patch_file: str):
-    print(f'[green]apply patch: {os.path.basename(patch_file)}[/green]')
+    print(f'[blue]apply patch: {os.path.basename(patch_file)}[/blue]')
     subprocess.call(f'git apply {patch_file}.patch'.split(' '))
     pass
 
