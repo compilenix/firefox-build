@@ -1,9 +1,9 @@
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
-index 0af0b8d2a0f43..f852c0e5b7cf1 100644
+index 9b56ba74cff12..6e430ced31de0 100644
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -2084,7 +2084,7 @@ pref("browser.migrate.chrome.history.maxAgeInDays", 180);
- pref("browser.migrate.showBookmarksToolbarAfterMigration", true);
+@@ -2156,7 +2156,7 @@ pref("browser.migrate.opera-gx.enabled", false);
+ pref("browser.migrate.content-modal.enabled", false);
  
  pref("extensions.pocket.api", "api.getpocket.com");
 -pref("extensions.pocket.enabled", true);
