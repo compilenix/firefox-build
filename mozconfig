@@ -1,5 +1,7 @@
-export OPT_LEVEL=3
-export RUSTC_OPT_LEVEL
+#!/bin/bash
+# vim: sw=4 et ft=bash
+export OPT_LEVEL=2
+export RUSTC_OPT_LEVEL=3
 
 JOBS=$(nproc)
 # Reduce jobs by 4 if there are more then 7 cores else set jobs to half of core count
@@ -8,27 +10,19 @@ JOBS=$(( $JOBS / 2 ))
 if [ "$JOBS" -le 1 ]; then JOBS=1; fi
 export JOBS="$JOBS"
 
-# automatic cpu cache compiler parameter detection
-# Example: CPU_CACHE_PARAMS="--param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512"
-# assumes execution with "bash" or "sh"
-CPU_CACHE_PARAMS=""
-gcc_flags=$(gcc -v -E -x c /dev/null -o /dev/null -march=native 2>&1 | grep /cc1)
-for flag in $gcc_flags; do
-    set +e
-    param=$(echo "$flag" | grep --color=none -E 'cache-size|cache-line-size')
-    set -e
-    if [[ -n "$param" ]]; then
-        export CPU_CACHE_PARAMS="$CPU_CACHE_PARAMS --param $param"
-    fi
-done
+export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native -mtune=native"
+export CXXFLAGS="${CXXFLAGS} -pipe -march=native -mtune=native"
+export RUSTFLAGS="-C target-cpu=native -C opt-level=${RUSTC_OPT_LEVEL}"
 
-export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native ${CPU_CACHE_PARAMS} -mtune=native"
-export CXXFLAGS="${CXXFLAGS} -pipe -march=native ${CPU_CACHE_PARAMS} -mtune=native"
-export RUSTFLAGS="-C target-cpu=native -C opt-level=${OPT_LEVEL}"
+# export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe"
+# export CXXFLAGS="${CXXFLAGS} -pipe"
+# export RUSTFLAGS="-C opt-level=${RUSTC_OPT_LEVEL}"
+
 export CARGO_BUILD_JOBS=$JOBS
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 export CARGO_PROFILE_RELEASE_LTO=true
-export CARGO_PROFILE_RELEASE_OPT_LEVEL=$OPT_LEVEL
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=$RUSTC_OPT_LEVEL
+export RUSTC_WRAPPER="/root/.cargo/bin/sccache"
 export MOZILLA_OFFICIAL=1
 
 mk_add_options MOZ_APP_REMOTINGNAME=Firefox
@@ -39,8 +33,10 @@ mk_add_options MOZ_PARALLEL_BUILD=$JOBS
 mk_add_options CARGO_BUILD_JOBS=$JOBS
 mk_add_options CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 mk_add_options CARGO_PROFILE_RELEASE_LTO=true
-mk_add_options CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+mk_add_options CARGO_PROFILE_RELEASE_OPT_LEVEL=$RUSTC_OPT_LEVEL
+mk_add_options RUSTC_WRAPPER="/root/.cargo/bin/sccache"
 
+ac_add_options --enable-project=browser
 ac_add_options --enable-sandbox
 ac_add_options --enable-rust-simd
 ac_add_options --enable-release
@@ -52,7 +48,6 @@ ac_add_options --enable-linker=gold
 ac_add_options --enable-hardening
 ac_add_options --enable-crashreporter
 ac_add_options --enable-bootstrap
-ac_add_options --enable-application=browser
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-parental-controls
@@ -60,10 +55,10 @@ ac_add_options --disable-debug-symbols
 ac_add_options --disable-debug
 
 # Disable geolocation web services
-ac_add_options --disable-necko-wifi
+# ac_add_options --disable-necko-wifi
 
 # Disable webrtc, dangerous, leaks internal IP address (and external on Win)
-ac_add_options --disable-webrtc
+# ac_add_options --disable-webrtc
 
 # The following option unsets Telemetry Reporting. With the Addons Fiasco,
 # Mozilla was found to be collecting user's data, including saved passwords and
