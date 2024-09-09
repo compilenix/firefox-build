@@ -1,8 +1,7 @@
-diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
-index 0af0b8d2a0f43..f852c0e5b7cf1 100644
---- a/browser/app/profile/firefox.js
-+++ b/browser/app/profile/firefox.js
-@@ -218,7 +218,7 @@ pref("lightweightThemes.getMoreURL", "https://addons.mozilla.org/%LOCALE%/firefo
+diff -r b73ccdf1f861 browser/app/profile/firefox.js
+--- a/browser/app/profile/firefox.js	Thu Aug 29 07:50:02 2024 +0000
++++ b/browser/app/profile/firefox.js	Mon Sep 09 12:09:48 2024 +0000
+@@ -226,7 +226,7 @@
  #endif
  
  // UI tour experience.
@@ -10,4 +9,4 @@ index 0af0b8d2a0f43..f852c0e5b7cf1 100644
 +pref("browser.uitour.enabled", false);
  pref("browser.uitour.loglevel", "Error");
  pref("browser.uitour.requireSecure", true);
- pref("browser.uitour.themeOrigin", "https://addons.mozilla.org/%LOCALE%/firefox/themes/");
+ pref("browser.uitour.url", "https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/tour/");

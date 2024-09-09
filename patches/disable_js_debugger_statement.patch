@@ -1,8 +1,7 @@
-diff --git a/js/src/frontend/Parser.cpp b/js/src/frontend/Parser.cpp
-index d1d0f8dd62b50..d962b52a11dc9 100644
---- a/js/src/frontend/Parser.cpp
-+++ b/js/src/frontend/Parser.cpp
-@@ -9101,6 +9101,10 @@ typename ParseHandler::Node GeneralParser<ParseHandler, Unit>::statement(
+diff -r b73ccdf1f861 js/src/frontend/Parser.cpp
+--- a/js/src/frontend/Parser.cpp	Thu Aug 29 07:50:02 2024 +0000
++++ b/js/src/frontend/Parser.cpp	Mon Sep 09 12:16:30 2024 +0000
+@@ -9553,6 +9553,10 @@
  
      // DebuggerStatement
      case TokenKind::Debugger:
@@ -13,7 +12,7 @@ index d1d0f8dd62b50..d962b52a11dc9 100644
        return debuggerStatement();
  
      // |function| is forbidden by lookahead restriction (unless as child
-@@ -9314,6 +9318,10 @@ GeneralParser<ParseHandler, Unit>::statementListItem(
+@@ -9796,6 +9800,10 @@
  
      // DebuggerStatement
      case TokenKind::Debugger:
@@ -24,23 +23,21 @@ index d1d0f8dd62b50..d962b52a11dc9 100644
        return debuggerStatement();
  
      // Declaration[Yield]:
-diff --git a/js/src/frontend/ReservedWords.h b/js/src/frontend/ReservedWords.h
-index 723f310ecf2ec..67ad120e84831 100644
---- a/js/src/frontend/ReservedWords.h
-+++ b/js/src/frontend/ReservedWords.h
+diff -r b73ccdf1f861 js/src/frontend/ReservedWords.h
+--- a/js/src/frontend/ReservedWords.h	Thu Aug 29 07:50:02 2024 +0000
++++ b/js/src/frontend/ReservedWords.h	Mon Sep 09 12:16:30 2024 +0000
 @@ -21,6 +21,7 @@
-   MACRO(const, const_, TokenKind::Const)                        \
-   MACRO(continue, continue_, TokenKind::Continue)               \
-   MACRO(debugger, debugger, TokenKind::Debugger)                \
-+  MACRO(xdebugger, xdebugger, TokenKind::XDebugger)             \
-   MACRO(default, default_, TokenKind::Default)                  \
-   MACRO(delete, delete_, TokenKind::Delete)                     \
-   MACRO(do, do_, TokenKind::Do)                                 \
-diff --git a/js/src/frontend/TokenKind.h b/js/src/frontend/TokenKind.h
-index a6d0f445bc7b8..377897b97c96d 100644
---- a/js/src/frontend/TokenKind.h
-+++ b/js/src/frontend/TokenKind.h
-@@ -118,6 +118,7 @@
+   MACRO(const, const_, TokenKind::Const)                                  \
+   MACRO(continue, continue_, TokenKind::Continue)                         \
+   MACRO(debugger, debugger, TokenKind::Debugger)                          \
++  MACRO(xdebugger, xdebugger, TokenKind::XDebugger)                       \
+   MACRO(default, default_, TokenKind::Default)                            \
+   MACRO(delete, delete_, TokenKind::Delete)                               \
+   MACRO(do, do_, TokenKind::Do)                                           \
+diff -r b73ccdf1f861 js/src/frontend/TokenKind.h
+--- a/js/src/frontend/TokenKind.h	Thu Aug 29 07:50:02 2024 +0000
++++ b/js/src/frontend/TokenKind.h	Mon Sep 09 12:16:30 2024 +0000
+@@ -119,6 +119,7 @@
    MACRO(Finally, "keyword 'finally'")                                  \
    MACRO(Throw, "keyword 'throw'")                                      \
    MACRO(Debugger, "keyword 'debugger'")                                \
@@ -48,15 +45,14 @@ index a6d0f445bc7b8..377897b97c96d 100644
    MACRO(Export, "keyword 'export'")                                    \
    MACRO(Import, "keyword 'import'")                                    \
    MACRO(Class, "keyword 'class'")                                      \
-diff --git a/js/src/vm/CommonPropertyNames.h b/js/src/vm/CommonPropertyNames.h
-index 8c2d606b5695e..4743dbb4b79c2 100644
---- a/js/src/vm/CommonPropertyNames.h
-+++ b/js/src/vm/CommonPropertyNames.h
-@@ -111,6 +111,7 @@
-   MACRO_(day, day, "day")                                                      \
-   MACRO_(dayPeriod, dayPeriod, "dayPeriod")                                    \
-   MACRO_(debugger, debugger, "debugger")                                       \
-+  MACRO_(xdebugger, xdebugger, "xdebugger")                                    \
-   MACRO_(decimal, decimal, "decimal")                                          \
-   MACRO_(decodeURI, decodeURI, "decodeURI")                                    \
-   MACRO_(decodeURIComponent, decodeURIComponent, "decodeURIComponent")         \
+diff -r b73ccdf1f861 js/src/vm/CommonPropertyNames.h
+--- a/js/src/vm/CommonPropertyNames.h	Thu Aug 29 07:50:02 2024 +0000
++++ b/js/src/vm/CommonPropertyNames.h	Mon Sep 09 12:16:30 2024 +0000
+@@ -125,6 +125,7 @@
+   MACRO_(daysInWeek, "daysInWeek")                                             \
+   MACRO_(daysInYear, "daysInYear")                                             \
+   MACRO_(debugger, "debugger")                                                 \
++  MACRO_(xdebugger, "xdebugger")                                               \
+   MACRO_(decimal, "decimal")                                                   \
+   MACRO_(decodeURI, "decodeURI")                                               \
+   MACRO_(decodeURIComponent, "decodeURIComponent")                             \

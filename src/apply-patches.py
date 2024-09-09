@@ -43,7 +43,7 @@ def apply_patch(patch_file: str):
 
 
 home_path = f'{os.getenv("HOME")}'
-patch_path = f'{home_path}/patches'
+patch_path = f'/src/patches'
 config_file = f'{patch_path}/config.yml'
 config = dict()
 

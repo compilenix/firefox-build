@@ -1,13 +1,12 @@
-diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
-index 9b56ba74cff12..6e430ced31de0 100644
---- a/browser/app/profile/firefox.js
-+++ b/browser/app/profile/firefox.js
-@@ -2156,7 +2156,7 @@ pref("browser.migrate.opera-gx.enabled", false);
- pref("browser.migrate.content-modal.enabled", false);
- 
+diff -r b73ccdf1f861 browser/app/profile/firefox.js
+--- a/browser/app/profile/firefox.js	Thu Aug 29 07:50:02 2024 +0000
++++ b/browser/app/profile/firefox.js	Mon Sep 09 12:10:55 2024 +0000
+@@ -2453,7 +2453,7 @@
  pref("extensions.pocket.api", "api.getpocket.com");
+ pref("extensions.pocket.bffApi", "firefox-api-proxy.cdn.mozilla.net");
+ pref("extensions.pocket.bffRecentSaves", true);
 -pref("extensions.pocket.enabled", true);
 +pref("extensions.pocket.enabled", false);
  pref("extensions.pocket.oAuthConsumerKey", "40249-e88c401e1b1f2242d9e441c4");
+ pref("extensions.pocket.oAuthConsumerKeyBff", "94110-6d5ff7a89d72c869766af0e0");
  pref("extensions.pocket.site", "getpocket.com");
- pref("extensions.pocket.onSaveRecs", true);

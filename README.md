@@ -48,7 +48,7 @@ DOCKER_BUILDKIT=0 docker build -t firefox-build:fedora .
 docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/root/.mozbuild:z -v $(pwd)/mozilla-unified:/src/mozilla-unified:z -v $(pwd)/mozconfig:/src/mozconfig:z -v $(pwd)/patches:/src/patches:z -it --rm --name firefox-build --hostname firefox-build firefox-build:fedora
 cd mozilla-unified
 build-prepare.sh
-# apply-patches.py
+apply-patches.py
 build.sh
 exit
 ./install.sh # you may run this with sudo if your current user is not permitted to write into the installation directory (default is ~/bin/)
