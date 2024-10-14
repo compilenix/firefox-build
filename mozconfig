@@ -5,8 +5,7 @@ export RUSTC_OPT_LEVEL=3
 
 JOBS=$(nproc)
 # Reduce jobs by 4 if there are more then 7 cores else set jobs to half of core count
-if [ "$JOBS" -ge 8 ]; then JOBS=$(( $JOBS - 4 )); else JOBS=$(( $JOBS / 2 )); fi
-JOBS=$(( $JOBS / 2 ))
+if [ "$JOBS" -ge 8 ]; then JOBS=$(( JOBS - 4 )); else JOBS=$(( JOBS / 2 )); fi
 if [ "$JOBS" -le 1 ]; then JOBS=1; fi
 export JOBS="$JOBS"
 
@@ -28,7 +27,7 @@ export MOZILLA_OFFICIAL=1
 mk_add_options MOZ_APP_REMOTINGNAME=Firefox
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-firefox
 mk_add_options MOZ_MAKE_FLAGS="-j${JOBS}"
-mk_add_options AUTOCLOBBER=1
+# mk_add_options AUTOCLOBBER=1
 mk_add_options MOZ_PARALLEL_BUILD=$JOBS
 mk_add_options CARGO_BUILD_JOBS=$JOBS
 mk_add_options CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
