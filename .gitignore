@@ -2,3 +2,4 @@
 /mozbuild
 /mozilla-unified
 /patches/config.yml
+/sccache

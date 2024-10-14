@@ -44,8 +44,12 @@ RUN set -ex \
     && rm install-rust.sh
 
 RUN set -ex \
-    && source "/root/.cargo/env" \
-    && cargo install sccache --locked \
+    && export SCCACHE_VERSION="v0.8.2" \
+    && wget --no-verbose "https://github.com/mozilla/sccache/releases/download/${SCCACHE_VERSION}/sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" -O "sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
+    && tar -xf "sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
+    && mkdir -pv "/root/.cargo/bin" \
+    && cp -v "./sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl/sccache" "/root/.cargo/bin/" \
+    && rm -rv "./sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" "./sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl" \
     && echo "export RUSTC_WRAPPER=\"/root/.cargo/bin/sccache\"" >>/root/.zshrc_include
 
 COPY src/* bin/
