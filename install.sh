@@ -61,7 +61,7 @@ function ask_yn_y_callback() {
     set -x
     mkdir -pv ~/bin
     cp -v "dist/${version}.tar.bz2" ~/bin/
-    cd ~/bin
+    pushd ~/bin
     if [ -d "${version}" ]; then
         rm -rf "${version}"
     fi
@@ -78,10 +78,11 @@ fi
 # link firefox
 function ask_yn_y_callback() {
     set -x
-    cd ~/bin
+    pushd ~/bin
     ln -sfv "${install_dir}/${version}/firefox/firefox" ./
     cp -v "${install_dir}/${version}/firefox/browser/chrome/icons/default/default128.png" "firefox.png"
     ls -lah --color=auto "${install_dir}/firefox"
+    popd
     set +x
 }
 if [ -d "$HOME/.mozilla/firefox" ]; then
