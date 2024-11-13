@@ -13,9 +13,9 @@ export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native -mtune=native"
 export CXXFLAGS="${CXXFLAGS} -pipe -march=native -mtune=native"
 export RUSTFLAGS="-C target-cpu=native -C opt-level=${RUSTC_OPT_LEVEL}"
 
-# export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe"
-# export CXXFLAGS="${CXXFLAGS} -pipe"
-# export RUSTFLAGS="-C opt-level=${RUSTC_OPT_LEVEL}"
+# export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=x86-64-v2 -mtune=generic"
+# export CXXFLAGS="${CXXFLAGS} -pipe -march=x86-64-v2 -mtune=generic"
+# export RUSTFLAGS="-C target-cpu=x86-64-v2 -C opt-level=${RUSTC_OPT_LEVEL}"
 
 export CARGO_BUILD_JOBS=$JOBS
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
@@ -40,6 +40,7 @@ ac_add_options --enable-sandbox
 ac_add_options --enable-rust-simd
 ac_add_options --enable-release
 ac_add_options --enable-optimize=-O${OPT_LEVEL}
+ac_add_options --with-ccache=/root/.cargo/bin/sccache
 ac_add_options --enable-official-branding
 ac_add_options --enable-new-pass-manager
 ac_add_options --enable-negotiateauth
