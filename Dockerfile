@@ -1,18 +1,57 @@
 # vim: sw=4 et
 
-FROM fedora:40
+FROM fedora:41
 
 RUN set -ex \
     && dnf update --refresh --assumeyes
 
 RUN set -ex \
-    && dnf groupinstall --assumeyes "C Development Tools and Libraries" "GNOME Software Development"
+    && dnf install --assumeyes \
+        GeoIP-devel \
+        autoconf \
+        automake \
+        binutils-gold \
+        c-ares-devel \
+        clang \
+        cmake \
+        curl \
+        diffutils \
+        gcc \
+        gd \
+        gd-devel \
+        gettext-envsubst \
+        git \
+        glib2-devel \
+        glibc-devel \
+        glibc-headers-x86 \
+        kernel-headers \
+        libpng-devel \
+        libtiff-devel \
+        libtool \
+        libxcrypt-devel \
+        libxml2-devel \
+        libxslt-devel \
+        libzstd-devel \
+        lld \
+        make \
+        openssl-devel \
+        pax-utils \
+        python3 \
+        python3-pip \
+        re2-devel \
+        readline-devel \
+        redhat-rpm-config \
+        tzdata \
+        wget \
+        which \
+        zlib-devel \
+        zstd
 
 RUN set -ex \
-    && dnf install --assumeyes python2 python3 python3-pip git curl wget zip vim autoconf213 nodejs which npm python2-devel python3-devel redhat-rpm-config alsa-lib-devel dbus-glib-devel glibc-static gtk2-devel libstdc++-static libXt-devel nasm pulseaudio-libs-devel yasm gcc-c++ mercurial perl perl-FindBin watchman perl-JSON-PP openssl-devel
+    && dnf install --assumeyes python3 python3-pip git curl wget zip vim autoconf213 nodejs which npm python3-devel redhat-rpm-config alsa-lib-devel dbus-glib-devel glibc-static gtk2-devel libstdc++-static libXt-devel nasm pulseaudio-libs-devel yasm gcc-c++ mercurial perl perl-FindBin perl-JSON-PP openssl-devel
 
 RUN set -ex \
-    && dnf --assumeyes install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate mlocate ncdu neovim NetworkManager-tui python3 redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich ripgrep langpacks-en
+    && dnf --assumeyes install acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate plocate ncdu neovim NetworkManager-tui python3 redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich ripgrep langpacks-en
 
 WORKDIR /src
 RUN wget https://hg.mozilla.org/mozilla-central/raw-file/default/python/mozboot/bin/bootstrap.py -O /src/bootstrap.py

@@ -79,7 +79,7 @@ fi
 function ask_yn_y_callback() {
     set -x
     pushd ~/bin
-    ln -sfv "${install_dir}/${version}/firefox/firefox" ./
+    ln -sfv "${install_dir}/${version}/firefox" ./firefox
     cp -v "${install_dir}/${version}/firefox/browser/chrome/icons/default/default128.png" "firefox.png"
     ls -lah --color=auto "${install_dir}/firefox"
     popd
