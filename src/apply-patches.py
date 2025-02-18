@@ -90,4 +90,3 @@ if os.path.isfile(config_file):
 else:
     with open(config_file, 'x', 1024, 'utf8') as config_file:
         yaml.safe_dump(config, config_file)
-

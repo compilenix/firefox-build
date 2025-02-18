@@ -9,31 +9,35 @@ if [ "$JOBS" -ge 8 ]; then JOBS=$(( JOBS - 4 )); else JOBS=$(( JOBS / 2 )); fi
 if [ "$JOBS" -le 1 ]; then JOBS=1; fi
 export JOBS="$JOBS"
 
-export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native -mtune=native"
-export CXXFLAGS="${CXXFLAGS} -pipe -march=native -mtune=native"
-export RUSTFLAGS="-C target-cpu=native -C opt-level=${RUSTC_OPT_LEVEL}"
+# export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native -mtune=native"
+# export CXXFLAGS="${CXXFLAGS} -pipe -march=native -mtune=native"
+# export RUSTFLAGS="-C target-cpu=native -C opt-level=${RUSTC_OPT_LEVEL}"
 
-# export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=x86-64-v2 -mtune=generic"
-# export CXXFLAGS="${CXXFLAGS} -pipe -march=x86-64-v2 -mtune=generic"
-# export RUSTFLAGS="-C target-cpu=x86-64-v2 -C opt-level=${RUSTC_OPT_LEVEL}"
+export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native -mtune=native -m64 -g1 -grecord-gcc-switches -pipe -Wno-complain-wrong-lang -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -fpermissive -DNSS_PKCS11_3_0_STRICT"
+export CXXFLAGS="${CXXFLAGS} -O${OPT_LEVEL} -pipe -march=native -mtune=native -m64 -g1 -grecord-gcc-switches -pipe -Wno-complain-wrong-lang -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -fpermissive -DNSS_PKCS11_3_0_STRICT"
+export LDFLAGS="${LDFLAGS} -Wl,-z,relro -Wl,--as-needed -Wl,-z,pack-relative-relocs -Wl,-z,now -Wl,--build-id=sha1 -Wl,--no-keep-memory"
+export RUSTFLAGS="-C target-cpu=native -C opt-level=${RUSTC_OPT_LEVEL} -Cdebuginfo=2 -Ccodegen-units=1 -Cstrip=none -Cforce-frame-pointers=yes --cap-lints=warn"
 
-export CARGO_BUILD_JOBS=$JOBS
+export CARGO_BUILD_JOBS=1
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 export CARGO_PROFILE_RELEASE_LTO=true
 export CARGO_PROFILE_RELEASE_OPT_LEVEL=$RUSTC_OPT_LEVEL
 export RUSTC_WRAPPER="/root/.cargo/bin/sccache"
 export MOZILLA_OFFICIAL=1
 
+export STRIP=/bin/true
+
 mk_add_options MOZ_APP_REMOTINGNAME=Firefox
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-firefox
 mk_add_options MOZ_MAKE_FLAGS="-j${JOBS}"
 mk_add_options AUTOCLOBBER=1
 mk_add_options MOZ_PARALLEL_BUILD=$JOBS
-mk_add_options CARGO_BUILD_JOBS=$JOBS
+mk_add_options CARGO_BUILD_JOBS=1
 mk_add_options CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 mk_add_options CARGO_PROFILE_RELEASE_LTO=true
 mk_add_options CARGO_PROFILE_RELEASE_OPT_LEVEL=$RUSTC_OPT_LEVEL
 mk_add_options RUSTC_WRAPPER="/root/.cargo/bin/sccache"
+mk_add_options STRIP=/bin/true
 
 ac_add_options --enable-project=browser
 ac_add_options --enable-sandbox
@@ -44,15 +48,22 @@ ac_add_options --with-ccache=/root/.cargo/bin/sccache
 ac_add_options --enable-official-branding
 ac_add_options --enable-new-pass-manager
 ac_add_options --enable-negotiateauth
-ac_add_options --enable-linker=gold
+# ac_add_options --enable-linker=gold
 ac_add_options --enable-hardening
 ac_add_options --enable-crashreporter
 ac_add_options --enable-bootstrap
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-parental-controls
-ac_add_options --disable-debug-symbols
-ac_add_options --disable-debug
+ac_add_options --enable-debug-symbols
+#ac_add_options --enable-debug
+ac_add_options --disable-install-strip
+ac_add_options --enable-replace-malloc
+ac_add_options --enable-lto
+ac_add_options --enable-js-shell
+ac_add_options --with-unsigned-addon-scopes=app,system
+ac_add_options --allow-addon-sideload
+ac_add_options --with-system-zlib
 
 # Disable geolocation web services
 # ac_add_options --disable-necko-wifi

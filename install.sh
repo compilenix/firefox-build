@@ -60,13 +60,14 @@ fi
 function ask_yn_y_callback() {
     set -x
     mkdir -pv ~/bin
-    cp -v "dist/${version}.tar.bz2" ~/bin/
+    cp -v "dist/${version}.tar.xz" ~/bin/
     pushd ~/bin
     if [ -d "${version}" ]; then
         rm -rf "${version}"
     fi
     mkdir -pv "${version}"
-    tar -xaf "${version}.tar.bz2" --directory "${install_dir}/${version}"
+    tar -xaf "${version}.tar.xz" --directory "${install_dir}/${version}"
+    popd
     set +x
 }
 if [ -d "$HOME/.mozilla/firefox" ]; then
@@ -79,6 +80,7 @@ fi
 function ask_yn_y_callback() {
     set -x
     pushd ~/bin
+    unlink ./firefox
     ln -sfv "${install_dir}/${version}/firefox" ./firefox
     cp -v "${install_dir}/${version}/firefox/browser/chrome/icons/default/default128.png" "firefox.png"
     ls -lah --color=auto "${install_dir}/firefox"
